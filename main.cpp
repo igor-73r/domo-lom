@@ -1,5 +1,5 @@
 
-# include "D:\Инженерка\TX\TXLib.h"
+# include "TXLib.h"
 void dom(int x, int y);
 void excavator(int x, int y, int polojenie_shara);
 void oblako(int x, int y, int razmer);
