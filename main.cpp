@@ -1,39 +1,74 @@
-
-# include "TXLib.h"
-void dom(int x, int y);
-void excavator(int x, int y, int polojenie_shara);
-void oblako(int x, int y, int razmer);
-void chelovek(int x, int y, int polojenie_ryki, int polojenie_nogi);
+#include "TXLib.h"
+void risovatDom (int x, int y);
+void excavator (int x, int y, int polojenie_shara);
+void oblako (int x, int y, int razmer);
+void chelovek (int x, int y, int polojenie_ryki, int polojenie_nogi);
+void trava();
+void excavatorEdet();
+void game();
 
 int main()
 {
     txCreateWindow(800, 600);
-    txSetFillColor (TX_BLUE);
-    txClear();
 
-    for(int i=0; i<50; i++) {
-        txSetFillColor (TX_BLUE);
-        txClear();
-
-        excavator(200-i*5, 250, 20 * (i%3));
-        chelovek(320-i*3, 250, 20 * (i%2), 10 * (i%2));
-        chelovek(350-i*3, 250, 20 * (i%2), 10 * (i%2));
-        chelovek(290-i*3, 250, 20 * (i%2), 10 * (i%2));
-        chelovek(380-i*3, 250, 20 * (i%2), 10 * (i%2));
-        dom(0, 250);
-        oblako(0, 100, 1);
-        oblako(200, 150, 2);
-        oblako(300, 50, 1);
-        chelovek(50, 250, 20 * (i%2), 10 * (i%2));
-
-        txSleep(100);
-    }
+    peremeschenieVnutriOkna();
 
     return 0;
 }
 
+void peremeschenieVnutriOkna()
+{
+    int x = -200;
+    int y = 50;
+    int vx = 1;
+    int vy = 50;
+    for (int i=0; i<500; i++)
+    {
+        txSetFillColor (TX_BLUE);
+        txClear();
 
-    void chelovek(int x, int y, int polojenie_ryki, int polojenie_nogi)
+        if (y < 0) {
+            vy = -vy;
+        }
+        if (y > 600) {
+            vy = -vy;
+        }
+        x = x + vx;
+        y = y + vy;
+        excavator(x, y, 20 * (i%3));
+
+        txSleep(100);
+    }
+}
+
+void excavatorEdet()
+{
+    for (int i=0; i<50; i++)
+    {
+        txSetFillColor (TX_BLUE);
+        txClear();
+
+        excavator(200-i*5, 250, 20 * (i%3));
+
+        trava();
+
+        chelovek(320-i*3, 250, 20 * (i%2), 10 * (i%2));
+        chelovek(350-i*3, 250, 20 * (i%2), 10 * (i%2));
+        chelovek(290-i*3, 250, 20 * (i%2), 10 * (i%2));
+        chelovek(380-i*3, 250, 20 * (i%2), 10 * (i%2));
+
+        risovatDom(0, 250);
+        oblako(0, 100-i*1, 1);
+        oblako(200-i*10, 150+i*4, 2);
+        oblako(300, 50+i*1, 1);
+
+        chelovek(50, 250, 20 * (i%2), 10 * (i%2));
+
+        txSleep(100);
+    }
+}
+
+void chelovek (int x, int y, int polojenie_ryki, int polojenie_nogi)
 {
     txSetColour(TX_RED);
     txSetFillColour(TX_RED);
@@ -47,10 +82,11 @@ int main()
     txLine(x+215, y+230, x+240, y+220+polojenie_ryki);
 }
 
-void dom(int x, int y)
+void risovatDom (int x, int y)
 {
     txSetColour(TX_BLACK);
     txLine(x+ 50, y+180, x+ 50, y+260);
+
     //Roof
     txLine(x+ 50, y+180, x+100, y+130);
     txLine(x+100, y+130, x+160, y+180);
@@ -60,6 +96,7 @@ void dom(int x, int y)
 
     txLine(x+160, y+180, x+160, y+260);
     txLine(x+ 50, y+260, x+160, y+260);
+
     //Window
     txLine(x+ 60, y+220, x+ 60, y+190);
     txLine(x+ 60, y+190, x+ 90, y+190);
@@ -81,7 +118,7 @@ void dom(int x, int y)
     txCircle(x+130, y+235, x+2);
 }
 
-void excavator(int x, int y, int polojenie_shara)
+void excavator (int x, int y, int polojenie_shara)
 {
     txSetFillColor (TX_BLACK);
     txSetColour(TX_YELLOW);
@@ -97,8 +134,6 @@ void excavator(int x, int y, int polojenie_shara)
     txRectangle(x+345, y+170, x+385, y+220);
     txRectangle(x+290, y+220, x+410, y+230);
 
-
-    txSetFillColor (TX_YELLOW);
     txLine(x+285, y+230, x+290, y+230);
     txLine(x+410, y+230, x+415, y+230);
     txLine(x+270, y+240, x+285, y+230);
@@ -114,11 +149,12 @@ void excavator(int x, int y, int polojenie_shara)
     txCircle(x+370, y+245, 7);
     txCircle(x+400, y+245, 7);
     txCircle(x+345, y+245, 7);
+
     txSetFillColour(TX_BLACK);
     txRectangle(x+355, y+175, x+380, y+200);
 }
 
-void oblako(int x, int y, int razmer)
+void oblako (int x, int y, int razmer)
 {
     txSetColour(TX_WHITE);
     txSetFillColour(TX_WHITE);
@@ -126,3 +162,13 @@ void oblako(int x, int y, int razmer)
     txCircle(x+210*razmer, y+50*razmer, 40*razmer);
     txCircle(x+240*razmer, y+50*razmer, 26*razmer);
 }
+
+void trava()
+{
+
+    txSetColour (TX_GREEN);
+    txLine(0, 510, 840, 510);
+    txSetFillColour (TX_GREEN);
+    txFloodFill(0, 550);
+}
+
