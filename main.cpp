@@ -11,12 +11,13 @@ int main()
 {
     txCreateWindow(800, 600);
 
-    peremeschenieVnutriOkna();
+    excavatorEdet();
+    //peremeschenieVnutriOkna();
 
     return 0;
 }
 
-void peremeschenieVnutriOkna()
+/*void peremeschenieVnutriOkna()
 {
     int x = -200;
     int y = 50;
@@ -39,7 +40,7 @@ void peremeschenieVnutriOkna()
 
         txSleep(100);
     }
-}
+}*/
 
 void excavatorEdet()
 {
